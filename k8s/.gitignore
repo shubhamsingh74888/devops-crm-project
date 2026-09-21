@@ -1,0 +1,57 @@
+cat > .gitignore << 'EOF'
+# ── Secrets & credentials ──────────────────────
+*.env
+.env
+.env.*
+.env.local
+.env.production
+secret.yml
+*secret*
+*secrets*
+*.pem
+*.key
+*.p12
+
+# ── Terraform ──────────────────────────────────
+**/.terraform/
+*.tfstate
+*.tfstate.*
+*.tfstate.backup
+.terraform.lock.hcl
+crash.log
+override.tf
+override.tf.json
+*_override.tf
+
+# ── Node.js ────────────────────────────────────
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+dist/
+build/
+.next/
+coverage/
+
+# ── Docker ─────────────────────────────────────
+.docker/
+
+# ── OS files ───────────────────────────────────
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# ── IDE ────────────────────────────────────────
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# ── Logs ───────────────────────────────────────
+logs/
+*.log
+
+# ── Kubernetes local configs ───────────────────
+kubeconfig
+*.kubeconfig
+EOF
