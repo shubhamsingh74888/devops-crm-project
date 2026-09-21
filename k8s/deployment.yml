@@ -15,24 +15,11 @@ spec:
       containers:
         - name: postgres
           image: postgres:15
-          env:
-            - name: POSTGRES_DB
-              valueFrom:
-                secretKeyRef:
-                  name: crm-secret
-                  key: POSTGRES_DB
-            - name: POSTGRES_USER
-              valueFrom:
-                secretKeyRef:
-                  name: crm-secret
-                  key: POSTGRES_USER
-            - name: POSTGRES_PASSWORD
-              valueFrom:
-                secretKeyRef:
-                  name: crm-secret
-                  key: POSTGRES_PASSWORD
           ports:
             - containerPort: 5432
+          envFrom:
+            - secretRef:
+                name: crm-secret
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -96,27 +83,12 @@ spec:
           image: twentycrm/twenty:latest
           ports:
             - containerPort: 3000
+          envFrom:
+            - secretRef:
+                name: crm-secret
           env:
-            - name: PG_DATABASE_URL
-              valueFrom:
-                secretKeyRef:
-                  name: crm-secret
-                  key: PG_DATABASE_URL
-            - name: APP_SECRET
-              valueFrom:
-                secretKeyRef:
-                  name: crm-secret
-                  key: APP_SECRET
-            - name: REDIS_URL
-              valueFrom:
-                configMapKeyRef:
-                  name: crm-config
-                  key: REDIS_URL
             - name: NODE_OPTIONS
-              valueFrom:
-                configMapKeyRef:
-                  name: crm-config
-                  key: NODE_OPTIONS
+              value: "--max-old-space-size=1024"
           resources:
             requests:
               cpu: "500m"
